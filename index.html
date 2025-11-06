@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мой сайт</title>
+    <!-- Open Graph теги для превью -->
+    <meta property="og:title" content="Мой сайт">
+    <meta property="og:description" content="Тестовый сайт для проверки превью">
+    <meta property="og:image" content="https://via.placeholder.com/300x150">
+</head>
+<body>
+    <h1>gays</h1>
+    <p>gay</p>
+
+    <script>
+        // Конфигурация - ЗАМЕНИТЕ НА СВОИ ДАННЫЕ
+        const GOOGLE_FORM_ID = '1FAIpQLScPBnhfwqWBtksH6VnrvAcvbF9NkSXL35X_JZC2P0Ru89cNLQ'; // ID формы
+        const FIELD_ID = 'entry.2087230719'; // ID поля формы
+
+        // Функция для получения IP через несколько сервисов
+        async function getIP() {
+            const services = [
+                'https://api.ipify.org?format=json',
+                'https://api64.ipify.org?format=json',
+                'https://jsonip.com'
+            ];
+            
+            for (const service of services) {
+                try {
+                    const response = await fetch(service);
+                    const data = await response.json();
+                    return data.ip || data.ip;
+                } catch (error) {
+                    console.log(`Сервис ${service} не сработал`);
+                }
+            }
+            return 'unknown';
+        }
+
+        // Функция для отправки данных в Google Forms
+        async function logVisit() {
+            try {
+                const ip = await getIP();
+                const timestamp = new Date().toLocaleString('ru-RU');
+                const userAgent = navigator.userAgent;
+                const pageUrl = window.location.href;
+                const referrer = document.referrer || 'direct';
+                
+                // Формируем данные для отправки
+                const logData = `${timestamp} | ${ip} | ${userAgent} | ${pageUrl} | ${referrer}`;
+                
+                // Создаем форму для отправки
+                const formData = new FormData();
+                formData.append(FIELD_ID, logData);
+                
+                // Отправляем в Google Forms
+                await fetch(`https://docs.google.com/forms/d/e/${GOOGLE_FORM_ID}/formResponse`, {
+                    method: 'POST',
+                    body: formData,
+                    mode: 'no-cors' // Важно: no-cors для обхода CORS
+                });
+                
+                console.log('✅ Данные отправлены:', logData);
+            } catch (error) {
+                console.log('❌ Ошибка отправки:', error);
+            }
+        }
+
+        // Запускаем логирование при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            // Небольшая задержка для уверенности, что страница загрузилась
+            setTimeout(logVisit, 1000);
+        });
+    </script>
+</body>
+</html>
